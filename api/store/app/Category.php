@@ -4,7 +4,7 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Store extends Model 
+class Category extends Model 
 {
 
     /**
@@ -13,7 +13,7 @@ class Store extends Model
      * @var array
      */
     protected $fillable = [
-        'name', 'description', 'email', 'phone', 'place', 'mainphoto', 'gallery'
+        'name', 'description'
     ];
 
     /**
@@ -31,7 +31,7 @@ class Store extends Model
      *
      * @var string
      */
-    protected $table = 'store';
+    protected $table = 'category';
 	
 	
 	/**
@@ -47,4 +47,14 @@ class Store extends Model
      * @var bool
      */
     public $incrementing = false;
+
+
+    /**
+     * Get the list of store from category.
+     */
+    public function Stores()
+    {
+        return $this->hasMany('App\Store');
+    }
+
 }

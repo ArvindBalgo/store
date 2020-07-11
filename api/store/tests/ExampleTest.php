@@ -12,10 +12,13 @@ class ExampleTest extends TestCase
      */
     public function testExample()
     {
-        $this->get('/');
-
-        $this->assertEquals(
-            $this->app->version(), $this->response->getContent()
-        );
+		$cat = factory('App\Category', 3)->make()->each(function($cat) {
+			$cat->save();
+			$size = 20;
+			for($i = 0; $i < $size ; $i++){
+				$store = factory('App\Store')->make();
+				$store->save();				
+			}
+		});
     }
 }
