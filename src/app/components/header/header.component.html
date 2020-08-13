@@ -10,6 +10,12 @@
                         </button>
                         <div class="collapse navbar-collapse justify-content-end" id="navbarNavDropdown">
                             <ul class="navbar-nav">
+                                <li>
+                                    <!-- Button trigger modal -->
+                                    <button type="button" class="btn" data-toggle="modal" data-target="#searchItemsModal">
+                                       <span class="ti-search" style="color: white"> Search</span>
+                                    </button>
+                                </li>
                                 <li class="nav-item dropdown">
                                     <a class="nav-link" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                         Explore
@@ -50,6 +56,45 @@
                         </div>
                     </nav>
                 </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+<!-- Modal -->
+<div class="modal fade" id="searchItemsModal" tabindex="-1" aria-labelledby="searchModal" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title" id="searchModal">Search</h3>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body" style="height: 250px">
+                <div style="margin: 20px;">
+                    <input type="text" class="form-control" placeholder="Example: Curepipe, tailor, food" aria-label="search-text" aria-describedby="basic-addon1">
+                </div>
+
+                <div style="margin: 20px;">
+                    <ng-multiselect-dropdown
+                            [placeholder]="'Categories'"
+                            [settings]="dropdownSettings"
+                            [data]="dropdownList"
+                            [(ngModel)]="selectedItems"
+                            (onSelect)="onItemSelect($event)"
+                            (onSelectAll)="onSelectAll($event)">
+                    </ng-multiselect-dropdown>
+                </div>
+
+
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary">Search</button>
             </div>
         </div>
     </div>
