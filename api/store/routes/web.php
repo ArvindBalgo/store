@@ -22,12 +22,12 @@ $router->group(['prefix' => 'api'], function () use ($router) {
     $router->get('store/all', 'StoreController@AllStores');
     $router->get('category/all', 'StoreController@AllCategories');
 
-    $router->get('store/filter/{category}/{keyworld}', 'Store@FindByFilters');
-    $router->get('store/byid/{id}', 'Store@FindById');
-    $router->get('store/bycategories/{category}', 'StoreController@FindByCategory');
+    $router->get('store/filter/{category}/{keyword}', 'StoreController@FindByFilters');
+    $router->get('store/byid/{id}', 'StoreController@FindById');
+    $router->get('store/bycategories/{category}', 'StoreController@FindByCategories');
 
-	$router->put('store/update', 'StoreController@UpdateStore');
-	$router->put('category/update', 'StoreController@UpdateCategory');
+	$router->put('store/update/{id}', 'StoreController@UpdateStore');
+	$router->put('category/update/{id}', 'StoreController@UpdateCategory');
 		
     $router->post('store/add', 'StoreController@AddStore');
     $router->post('category/add', 'StoreController@AddCategory');
