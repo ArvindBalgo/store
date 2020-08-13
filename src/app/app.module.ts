@@ -11,6 +11,9 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {MatSelectModule} from '@angular/material/select';
 import {NgMultiSelectDropDownModule} from 'ng-multiselect-dropdown';
+import { ListComponent } from './components/list/list.component';
+import { HomeComponent } from './components/home/home.component';
+import {MatCheckboxModule} from '@angular/material/checkbox';
 
 @NgModule({
   declarations: [
@@ -18,7 +21,9 @@ import {NgMultiSelectDropDownModule} from 'ng-multiselect-dropdown';
     HeaderComponent,
     CategoriesComponent,
     FeaturesComponent,
-    FooterComponent
+    FooterComponent,
+    ListComponent,
+    HomeComponent
   ],
     imports: [
         BrowserModule,
@@ -27,7 +32,8 @@ import {NgMultiSelectDropDownModule} from 'ng-multiselect-dropdown';
         ReactiveFormsModule,
         MatSelectModule,
         NgMultiSelectDropDownModule.forRoot(),
-        FormsModule
+        FormsModule,
+        MatCheckboxModule
     ],
   providers: [],
   bootstrap: [AppComponent]

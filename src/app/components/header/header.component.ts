@@ -1,6 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import {FormControl} from '@angular/forms';
-import {IDropdownSettings} from 'ng-multiselect-dropdown/multiselect.model';
 
 @Component({
   selector: 'app-header',
