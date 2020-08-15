@@ -112,4 +112,6 @@ $app->router->group([
     require __DIR__.'/../routes/web.php';
 });
 
+$app->register(Irazasyed\Larasupport\Providers\ArtisanServiceProvider::class);
+$app->register(Salman\CrudGenerator\CrudGeneratorServiceProvider::class);
 return $app;

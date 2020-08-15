@@ -13,7 +13,8 @@ class Store extends Model
      * @var array
      */
     protected $fillable = [
-        'name', 'description', 'email', 'phone', 'place', 'mainphoto', 'gallery'
+        'name', 'description', 'email', 'phone', 'place', 'mainphoto', 'gallery', 'featured', 'beginhour',
+        'endhour'
     ];
 
     /**

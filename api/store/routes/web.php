@@ -31,6 +31,16 @@ $router->group(['prefix' => 'api'], function () use ($router) {
 		
     $router->post('store/add', 'StoreController@AddStore');
     $router->post('category/add', 'StoreController@AddCategory');
+	
+	//users
+	$router->get('users/all', 'UsersController@index');
+	$router->get('users/get/{id}', 'UsersController@show');
+	$router->post('users/add', 'UsersController@store');
+    $router->put('users/update/{id}', 'UsersController@update');
+    $router->delete('users/delete/{id}', 'UsersController@destroy');
+
+
+
  });
 /*
 /store/mostviewed =>  retourn une liste qui sera ordonné par nombre de vue
