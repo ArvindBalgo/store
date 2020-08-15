@@ -7,6 +7,8 @@ use Illuminate\Database\Eloquent\Model;
 class Store extends Model 
 {
 
+    protected $guarded = ['id'];
+
     /**
      * The attributes that are mass assignable.
      *
@@ -14,7 +16,7 @@ class Store extends Model
      */
     protected $fillable = [
         'name', 'description', 'email', 'phone', 'place', 'mainphoto', 'gallery', 'featured', 'beginhour',
-        'endhour'
+        'closehour', 'featued'
     ];
 
     /**
@@ -42,18 +44,14 @@ class Store extends Model
      */
 	protected $primaryKey = 'id';
 	
-	 /**
-     * Indicates if the IDs are auto-incrementing.
-     *
-     * @var bool
-     */
-    public $incrementing = false;
+	
+
 
      /**
-     * Get the Category of the store.
+     * The roles that belong to the .
      */
-    public function category()
+    public function Subcategories()
     {
-        return $this->belongsTo('App\Category');
+        return $this->belongsToMany('App\Subcategory');
     }
 }

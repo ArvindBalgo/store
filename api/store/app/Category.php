@@ -52,9 +52,9 @@ class Category extends Model
     /**
      * Get the list of store from category.
      */
-    public function Stores()
+    public function Subcategories()
     {
-        return $this->hasMany('App\Store');
+        return $this->hasMany('App\Subcategory');
     }
 
 }

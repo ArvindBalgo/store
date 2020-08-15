@@ -17,7 +17,6 @@ $router->get('/', function () use ($router) {
 
 
 // Get
-
 $router->group(['prefix' => 'api'], function () use ($router) {
     $router->get('store/all', 'StoreController@AllStores');
     $router->get('category/all', 'StoreController@AllCategories');
@@ -38,9 +37,15 @@ $router->group(['prefix' => 'api'], function () use ($router) {
 	$router->post('users/add', 'UsersController@store');
     $router->put('users/update/{id}', 'UsersController@update');
     $router->delete('users/delete/{id}', 'UsersController@destroy');
+    
+
+    //subcategories
+    $router->post('subcategory/add', 'StoreController@AddSubCategory');
+    $router->get('subcategory/all', 'StoreController@AllSubCategories');
 
 
 
+    //
  });
 /*
 /store/mostviewed =>  retourn une liste qui sera ordonné par nombre de vue

@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Store;
 use App\Category;
+use App\Subcategory;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
@@ -29,6 +30,11 @@ class StoreController extends Controller
     public function AllCategories()
     {
     	return response()->json(Category::all());
+    }
+     
+     public function AllSubCategories()
+    {
+    	return response()->json(Subcategory::all());
     }
 
 	public function FindByFilters($category, $keyword){
@@ -61,12 +67,37 @@ class StoreController extends Controller
 
     public function FindByCategories(Request $request, $category){
 		$tabcat = explode("|", $category);
-		$qb = Store::where('category_id', '=', -1);		
+
+		//subcategories
+		$qb = Subcategory::where('category_id', '=', -1);		
 		foreach($tabcat as $cat){
 			$qb = 	$qb->orWhere('category_id', $cat);
 		}
-		$cats = $qb->get();
-		return response()->json($cats);	
+		$subcategories = $qb->get();
+
+
+		//stores
+		//list ids
+
+
+		$qb = Store::where('category_id', '=', -1);
+		$stores = array();
+		foreach($subcategories as $sub){
+			foreach($sub->Stores() as $st){
+				if($st){
+					array_push($stores, $st);
+				}
+			}
+		}
+
+
+	
+	
+		$data = [
+            "subcategories" => $subcategories,
+            "stores" => $stores
+		];
+		return response()->json($data);	
     }
 
 	private function InitModelAttributesFromRequest($attributeKeys, $request,$model){
@@ -118,22 +149,25 @@ class StoreController extends Controller
 		// $mainphoto = $request->input('mainphoto');
 		// $mainphoto = $request->input('mainphoto');
 		// $gallery = $request->input('gallery');
-		$tab = array();
-		$keys = [
-			'name', 'description', 'email', 'phone', 'place', 'mainphoto', 'gallery', 'category_id'
-		];
-		$tab = $this->InitModelAttributesFromRequest($keys, $request, $tab);
-var_dump($tab);
 		$store  = Store::create(
-			// ['name' => $name,
-			// 'description' => $description,
-			// 'email' => $description,
-			// 'phone' => $phone,
-			// 'place' => $place,
-			// 'mainphoto' => $mainphoto,
-			// 'gallery' => $gallery]
-			$tab
+		$request->all()
 		);
+
+        $subcatids = $request->input("subcategory_ids");
+		if(!empty($subcatids)){
+            $tabcat = explode("|", $subcatids);
+			
+			$qb = Subcategory::where('id', '=', -1);		
+			foreach($tabcat as $cat){
+				$qb = 	$qb->orWhere('id', $cat);
+			}
+		    $cats = $qb->get();	
+
+		    foreach($cats as $cat){
+		       $store->Subcategories()->save($cat);
+		    }	
+		}
+
 		
 		
 		return response()->json([$store]);	
@@ -148,6 +182,21 @@ var_dump($tab);
 		
 		
 		return response()->json([$cat]);	
+	}
+
+	public function AddSubCategory(Request $request){
+		try{
+			$catid = $request->input("category_id");
+    		$cat = Category::where('id', $catid)->firstOrFail();
+		    
+		    $subcat = new Subcategory($request->all());
+		    $cat->Subcategories()->save($subcat);    		
+    		return response()->json([$subcat]);	
+		} catch (ModelNotFoundException $e) {
+			$content = "Notfound: Store with id ".$id." doesn’t exist";
+			$status = "404";
+			return (new Response($content, $status));
+		} 
 	}
 
 }
