@@ -53,11 +53,13 @@ class StoreController extends Controller
 		return response()->json($querybuilder->get());
     }
 
-	public function FindById($id)
+	public function FindById(Request $request,$id)
     {
     	try{
     		$model = Store::where('id', $id)->firstOrFail();
-    		return response()->json([$model]);	
+    		$model->load('Subcategories');
+    		return response()->json([$model
+    		]);	
 		} catch (ModelNotFoundException $e) {
 			$content = "Notfound: Store with id ".$id." doesn’t exist";
 			$status = "404";
@@ -82,14 +84,14 @@ class StoreController extends Controller
 
 		$qb = Store::where('category_id', '=', -1);
 		$stores = array();
+		$subcategories->load('Stores');
 		foreach($subcategories as $sub){
-			foreach($sub->Stores() as $st){
+			foreach($sub->Stores as $st){
 				if($st){
 					array_push($stores, $st);
 				}
 			}
 		}
-
 
 	
 	
@@ -141,14 +143,6 @@ class StoreController extends Controller
 	}
 	
 	public function AddStore(Request $request){
-		// $name = $request->input('name');
-		// $description = $request->input('description');
-		// $email = $request->input('email');
-		// $phone = $request->input('phone');
-		// $place = $request->input('place');
-		// $mainphoto = $request->input('mainphoto');
-		// $mainphoto = $request->input('mainphoto');
-		// $gallery = $request->input('gallery');
 		$store  = Store::create(
 		$request->all()
 		);
