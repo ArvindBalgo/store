@@ -24,7 +24,41 @@ class StoreController extends Controller
 	
 	public function AllStores()
     {
-    	return response()->json(Store::all());
+		$stores = Store::all();		
+		$stores->load('Subcategories');
+
+        $result = array();		
+	    $listcat = Category::all();
+		
+		foreach($listcat as $cat){				
+			$qb = Subcategory::where('category_id', '=', $cat->id);		
+			$subcategories = $qb->get();
+			$subids = array();
+			foreach($subcategories as $sub){
+				array_push($subids, $sub->id);
+			}
+
+			$tmpstores = array();
+			foreach($stores as $st){
+					foreach($st->subcategories as $tmpsub){
+						if(in_array($tmpsub->id, $subids)){	
+							array_push($tmpstores, $st);
+							continue;
+						}
+				}	                					
+		   }                               
+		   $tmpcat = [
+				"type" => "category",
+				"id" => $cat->id,
+				"name" => $cat->name,
+				"stores" => $tmpstores
+			];
+			array_push($result, $tmpcat);
+		}			
+		
+       
+
+		return response()->json($result);
     }
 
     public function AllCategories()
@@ -39,18 +73,45 @@ class StoreController extends Controller
 
 	public function FindByFilters($category, $keyword){
 		$querybuilder = Store::where('name', 'like', "%".$keyword."%")->orWhere('description', 'like', "%".$keyword."%");		
-		
+		$stores = $querybuilder->get();
+		$stores->load('Subcategories');
+
+        $result = array();
 		if(!empty($category) && $category != "all"){
-			$querybuilder = Store::where([
-				['name', 'like', "%".$keyword."%"],
-				['category_id', '=', $category]
-				])
-			->orWhere([
-			['description', 'like', "%".$keyword."%"], 
-			['category_id', '=', $category]
-			]);		
+			$tabcat = explode("|", $category);
+		    $listcat = Category::find($tabcat);
+		}else{
+			$listcat = Category::all();
 		}
-		return response()->json($querybuilder->get());
+		foreach($listcat as $cat){				
+			$qb = Subcategory::where('category_id', '=', $cat->id);		
+			$subcategories = $qb->get();
+			$subids = array();
+			foreach($subcategories as $sub){
+				array_push($subids, $sub->id);
+			}
+
+			$tmpstores = array();
+			foreach($stores as $st){
+					foreach($st->subcategories as $tmpsub){
+						if(in_array($tmpsub->id, $subids)){	
+							array_push($tmpstores, $st);
+							continue;
+						}
+				}	                					
+		   }                               
+		   $tmpcat = [
+				"type" => "category",
+				"id" => $cat->id,
+				"name" => $cat->name,
+				"stores" => $tmpstores
+			];
+			array_push($result, $tmpcat);
+		}			
+		
+       
+
+		return response()->json($result);
     }
 
 	public function FindById(Request $request,$id)
@@ -78,25 +139,30 @@ class StoreController extends Controller
 		$subcategories = $qb->get();
 
 
-		//stores
-		//list ids
-
-
-		$qb = Store::where('category_id', '=', -1);
 		$stores = array();
+		$subcategoriesFormated = array();	
+		$addedIds = array();
 		$subcategories->load('Stores');
 		foreach($subcategories as $sub){
 			foreach($sub->Stores as $st){
 				if($st){
-					array_push($stores, $st);
+                    if(!in_array($st->id, $addedIds)){
+                        	array_push($stores, $st);
+                        	array_push($addedIds, $st->id); 	
+                    }
 				}
+			
 			}
+			array_push($subcategoriesFormated, [
+			"id" => $sub->id,
+            "name" => $sub->name
+			]);
 		}
 
 	
 	
 		$data = [
-            "subcategories" => $subcategories,
+            "subcategories" => $subcategoriesFormated,
             "stores" => $stores
 		];
 		return response()->json($data);	
@@ -160,10 +226,7 @@ class StoreController extends Controller
 		    foreach($cats as $cat){
 		       $store->Subcategories()->save($cat);
 		    }	
-		}
-
-		
-		
+		}				
 		return response()->json([$store]);	
 	}
 
