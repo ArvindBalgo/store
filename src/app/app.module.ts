@@ -14,6 +14,7 @@ import {NgMultiSelectDropDownModule} from 'ng-multiselect-dropdown';
 import { ListComponent } from './components/list/list.component';
 import { HomeComponent } from './components/home/home.component';
 import {MatCheckboxModule} from '@angular/material/checkbox';
+import { ItemComponent } from './components/item/item.component';
 
 @NgModule({
   declarations: [
@@ -23,7 +24,8 @@ import {MatCheckboxModule} from '@angular/material/checkbox';
     FeaturesComponent,
     FooterComponent,
     ListComponent,
-    HomeComponent
+    HomeComponent,
+    ItemComponent
   ],
     imports: [
         BrowserModule,
