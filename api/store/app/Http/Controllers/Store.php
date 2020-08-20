@@ -182,7 +182,7 @@ class StoreController extends Controller
 	    try {
 	    	$model = Store::where('id', $id)->firstOrFail();
 			$keys = [
-			'name', 'description', 'email', 'phone', 'place', 'mainphoto', 'gallery', 'category_id'
+			'name', 'description', 'email', 'phone', 'place', 'mainphoto', 'gallery', 'category_id', 'featured'
 			];
 		    $model = $this->InitModelAttributesFromRequest($keys, $request, $model);
 

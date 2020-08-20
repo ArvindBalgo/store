@@ -12,7 +12,7 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n  \"name\": \"SoftValue\",\r\n  \"description\": \"It is a great company\",\r\n  \"email\": \"roreilly@gmail.com\",\r\n  \"phone\": \"8965129841\",\r\n  \"place\": \"Mauritius\",\r\n  \"mainphoto\": \"softvalue.png\",\r\n  \"gallery\": \"gallery\",\r\n  \"subcategory_ids\": \"2|1\",\r\n  \"featured\": 1,\r\n  \"beginhour\": 0,\r\n  \"closehour\": \"5\"\r\n}",
+					"raw": "{\r\n  \"name\": \"SoftValue\",\r\n  \"description\": \"It is a great company\",\r\n  \"email\": \"roreilly@gmail.com\",\r\n  \"phone\": \"8965129841\",\r\n  \"place\": \"Mauritius\",\r\n  \"mainphoto\": \"softvalue.png\",\r\n  \"gallery\": \"gallery\",\r\n  \"subcategory_ids\": \"2|1\",\r\n  \"featured\": true,\r\n  \"beginhour\": 0,\r\n  \"closehour\": \"5\"\r\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -55,7 +55,7 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": " {\r\n   \"name\": \"SoftValue\",\r\n  \"description\": \"It is a great company\",\r\n  \"email\": \"roreilly@gmail.com\",\r\n  \"phone\": \"8965129841\",\r\n  \"place\": \"Mauritius\",\r\n  \"mainphoto\": \"softvalue.png\",\r\n  \"gallery\": \"gallery\",\r\n  \"subcategory_ids\": \"1|2\",\r\n  \"featured\": 1,\r\n  \"beginhour\": 0,\r\n  \"closehour\": \"5\"\r\n  }",
+					"raw": " {\r\n   \"name\": \"SoftValue changed\",\r\n  \"description\": \"It is a great company\",\r\n  \"email\": \"roreilly@gmail.com\",\r\n  \"phone\": \"8965129841\",\r\n  \"place\": \"Mauritius\",\r\n  \"mainphoto\": \"softvalue.png\",\r\n  \"gallery\": \"gallery\",\r\n  \"subcategory_ids\": \"1|2\",\r\n  \"featured\": false,\r\n  \"beginhour\": 0,\r\n  \"closehour\": \"5\"\r\n  }",
 					"options": {
 						"raw": {
 							"language": "json"
