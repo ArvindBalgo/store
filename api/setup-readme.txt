@@ -36,8 +36,15 @@ In this readme  will explaine  how to  launch and synchronise the project
 		
 - To synchronise the project 
 	* Pull the target git branch
-	* run the folowing cmd in the [ROOT]\api\store directory
+	* import the dump file [ROOT]\api\store\store.mysql to your database (use php my admin)
+	* run the folowing cmd in the [ROOT]\api\store directory 
 		php artisan migrate
+
+- To test the api
+	* open your postman (you can download postman here : https://www.postman.com/downloads/)
+	* Import the api description [ROOT]\api\lockabusiness.postman.json in postman
+	* Then test the api
+
 
 		
 
