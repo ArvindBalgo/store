@@ -182,10 +182,26 @@ class StoreController extends Controller
 	    try {
 	    	$model = Store::where('id', $id)->firstOrFail();
 			$keys = [
-			'name', 'description', 'email', 'phone', 'place', 'mainphoto', 'gallery', 'category_id'
+			'name', 'description', 'email', 'phone', 'place', 'mainphoto', 'gallery', 'category_id', 'featured'
 			];
 		    $model = $this->InitModelAttributesFromRequest($keys, $request, $model);
+
+		     $subcatids = $request->input("subcategory_ids");
+		     $model->load("Subcategories");
+			if(!empty($subcatids)){
+			    //remove all subcategories
+			    foreach($model->Subcategories as $sub){
+					$model->Subcategories()->detach($sub->id);
+				}
+
+				$tabcat = explode("|", $subcatids);
+				foreach($tabcat as $cat){
+					$model->Subcategories()->attach($cat);
+				}
+			}				
+
 		    $model->save();
+		    $model->load("Subcategories");
 		    return response()->json([$model]);	
 		} catch (ModelNotFoundException $e) {
 			$content = "update failed: id of the store not found.";
@@ -226,7 +242,8 @@ class StoreController extends Controller
 		    foreach($cats as $cat){
 		       $store->Subcategories()->save($cat);
 		    }	
-		}				
+		}	
+		$store->load("Subcategories");			
 		return response()->json([$store]);	
 	}
 
@@ -255,5 +272,33 @@ class StoreController extends Controller
 			return (new Response($content, $status));
 		} 
 	}
+
+	public function updateSubcategory(Request $request, $id)
+    {
+        $sub = Subcategory::findOrFail($id);
+        $sub->update($request->all());
+
+        return response(['data' => $sub ], 200);
+    }
+
+    public function destroyStore($id)
+    {
+        Store::destroy($id);
+        return response(['data' => null ], 204);
+    }
+
+	public function destroySubcategory($id)
+    {
+        Subcategory::destroy($id);
+        return response(['data' => null ], 204);
+    }
+    
+    public function destroyCategory($id)
+    {
+        Category::destroy($id);
+        return response(['data' => null ], 204);
+    }
+
+	
 
 }

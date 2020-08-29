@@ -22,7 +22,7 @@ $router->group(['prefix' => 'api'], function () use ($router) {
     $router->get('category/all', 'StoreController@AllCategories');
 
     $router->get('store/filter/{category}/{keyword}', 'StoreController@FindByFilters');
-    $router->get('store/byid/{id}', 'StoreController@FindById');
+    $router->get('store/{id}', 'StoreController@FindById');
     $router->get('store/bycategories/{category}', 'StoreController@FindByCategories');
 
 	$router->put('store/update/{id}', 'StoreController@UpdateStore');
@@ -31,9 +31,14 @@ $router->group(['prefix' => 'api'], function () use ($router) {
     $router->post('store/add', 'StoreController@AddStore');
     $router->post('category/add', 'StoreController@AddCategory');
 	
+
+	$router->delete('store/delete/{id}', 'StoreController@destroyStore');
+	$router->delete('category/delete/{id}', 'StoreController@destroyCategory');
+
+
 	//users
 	$router->get('users/all', 'UsersController@index');
-	$router->get('users/get/{id}', 'UsersController@show');
+	$router->get('users/{id}', 'UsersController@show');
 	$router->post('users/add', 'UsersController@store');
     $router->put('users/update/{id}', 'UsersController@update');
     $router->delete('users/delete/{id}', 'UsersController@destroy');
@@ -42,6 +47,8 @@ $router->group(['prefix' => 'api'], function () use ($router) {
     //subcategories
     $router->post('subcategory/add', 'StoreController@AddSubCategory');
     $router->get('subcategory/all', 'StoreController@AllSubCategories');
+    $router->delete('subcategory/delete/{id}', 'StoreController@destroySubcategory');
+	$router->put('subcategory/update/{id}', 'StoreController@updateSubcategory');
 
 
 
