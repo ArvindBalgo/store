@@ -1,11 +1,16 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
-import {AppComponent} from "./app.component";
+import {ListComponent} from './components/list/list.component';
+import {HomeComponent} from './components/home/home.component';
+import {ItemComponent} from "./components/item/item.component";
 
 
 const routes: Routes = [
-  { path: '*', component: AppComponent },
-  { path: '**', component: AppComponent }
+  { path: '*', component: HomeComponent },
+  { path: 'list/:category', component: ListComponent },
+  { path: 'list/:category/:store', component: ItemComponent },
+  { path: 'home', component: HomeComponent },
+  { path: '**', component: HomeComponent }
 ];
 
 @NgModule({
